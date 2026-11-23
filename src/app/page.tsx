@@ -243,6 +243,8 @@ export default function Home() {
   const [contactName, setContactName] = useState("");
   const [contactPhone, setContactPhone] = useState("");
   const [contactMsg, setContactMsg] = useState("");
+  const [fly, setFly] = useState<{ src: string; x: number; y: number; tx: number; ty: number; size: number; key: number } | null>(null);
+  const [cartBump, setCartBump] = useState(0);
 
   useEffect(() => {
     if (!toast) return;
@@ -256,10 +258,30 @@ export default function Home() {
 
   const visibleProducts = PRODUCTS.filter((p) => p.name.includes(query.trim()));
 
-  const addToCart = (id: string) => {
+  const addToCart = (id: string, e?: React.MouseEvent) => {
     setCart((c) => ({ ...c, [id]: (c[id] ?? 0) + 1 }));
     setAddedId(id);
     setTimeout(() => setAddedId((cur) => (cur === id ? null : cur)), 1200);
+    // Fly-to-cart animation: clone the product photo and arc it to the cart icon.
+    const card = e?.currentTarget.closest("article");
+    const img = card?.querySelector("img");
+    const cartBtn = document.querySelector('[aria-label="سلة التسوق"]');
+    const product = PRODUCTS.find((p) => p.id === id);
+    if (img && cartBtn && product) {
+      const r = img.getBoundingClientRect();
+      const c = cartBtn.getBoundingClientRect();
+      const size = Math.min(r.width, 96);
+      setFly({
+        src: product.image,
+        x: r.left + r.width / 2 - size / 2,
+        y: r.top + r.height / 2 - size / 2,
+        tx: c.left + c.width / 2 - 10,
+        ty: c.top + c.height / 2 - 10,
+        size,
+        key: Date.now(),
+      });
+    }
+    setCartBump((b) => b + 1);
   };
   const setQty = (id: string, qty: number) => {
     setCart((c) => {
@@ -401,6 +423,7 @@ export default function Home() {
               <Search className="h-5 w-5" />
             </button>
             <button
+              key={cartBump}
               type="button"
               aria-label="سلة التسوق"
               onClick={() => {
@@ -408,7 +431,10 @@ export default function Home() {
                 setCheckoutStep(false);
                 setCartOpen(true);
               }}
-              className="relative flex h-10 w-10 items-center justify-center rounded-full text-ink transition hover:bg-cream hover:text-caramel"
+              className={cx(
+                "relative flex h-10 w-10 items-center justify-center rounded-full text-ink transition hover:bg-cream hover:text-caramel",
+                cartBump > 0 && "animate-cart-bump"
+              )}
             >
               <ShoppingBag className="h-5 w-5" />
               {cartCount > 0 && (
@@ -597,7 +623,7 @@ export default function Home() {
                 </p>
                 <button
                   type="button"
-                  onClick={() => addToCart(p.id)}
+                  onClick={(e) => addToCart(p.id, e)}
                   className={cx(
                     "mt-3 flex w-full items-center justify-center gap-1.5 rounded-full px-2 py-2 text-xs font-bold text-white transition sm:gap-2 sm:px-4 sm:py-2.5 sm:text-sm",
                     addedId === p.id ? "bg-espresso" : "bg-caramel hover:bg-caramel-hover"
@@ -1551,6 +1577,36 @@ export default function Home() {
             )}
           </div>
         </div>
+      )}
+
+      {/* ============ Flying product image (add-to-cart animation) ============ */}
+      {fly && (
+        <img
+          key={fly.key}
+          ref={(el) => {
+            if (!el) return;
+            const dx = fly.tx - fly.x;
+            const dy = fly.ty - fly.y;
+            const anim = el.animate(
+              [
+                { transform: "translate(0, 0) scale(1)", opacity: 1, offset: 0 },
+                {
+                  transform: `translate(${dx * 0.5}px, ${dy * 0.5 - 80}px) scale(0.5)`,
+                  opacity: 0.9,
+                  offset: 0.55,
+                },
+                { transform: `translate(${dx}px, ${dy}px) scale(0.15)`, opacity: 0.2, offset: 1 },
+              ],
+              { duration: 750, easing: "cubic-bezier(0.22, 0.61, 0.36, 1)" }
+            );
+            anim.onfinish = () => setFly(null);
+          }}
+          src={fly.src}
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none fixed z-[90] rounded-full object-cover shadow-xl"
+          style={{ left: fly.x, top: fly.y, width: fly.size, height: fly.size }}
+        />
       )}
 
       {/* ============ Toast ============ */}

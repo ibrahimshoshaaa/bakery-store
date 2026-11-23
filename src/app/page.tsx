@@ -6,6 +6,7 @@ import {
   ArrowLeft,
   CalendarDays,
   Check,
+  Clock,
   Heart,
   Leaf,
   Mail,
@@ -93,9 +94,43 @@ const WHY_POINTS = [
 ];
 
 const POSTS = [
-  { title: "5 نصائح لخبز منزلي مثالي", date: "25 أكتوبر 2026", image: "/images/blog-1.jpg" },
-  { title: "كيفية تزيين الكيك بشكل جميل", date: "20 أكتوبر 2026", image: "/images/blog-2.jpg" },
-  { title: "وصفة كوكيز سهلة في المنزل", date: "15 أكتوبر 2026", image: "/images/blog-3.jpg" },
+  {
+    title: "5 نصائح لخبز منزلي مثالي",
+    date: "25 أكتوبر 2026",
+    image: "/images/blog-1.jpg",
+    excerpt: "أسرار بسيطة تخلي خبزك في البيت يطلع هش وطري زي مخبزنا بالظبط.",
+    body: [
+      "السر الأول هو الدقة: استخدم ميزان مطبخ بدل الأكواب، لأن فرق جرامات بسيط في الدقيق أو الخميرة ممكن يغيّر قوام العجينة تماماً.",
+      "السر الثاني هو حرارة الفرن: سخّن الفرن قبل الخبز بعشر دقائق على الأقل، وحط صينية فيها ماء ساخن تحت الرف عشان البخار يخلي القشرة مقرمشة من بره وطرية من جوه.",
+      "السر الثالث هو الصبر: سيب العجينة تخمر في مكان دافئ لحد ما يتضاعف حجمها، ومتستعجلش — التخمير البطيء هو اللي بيعمل النكهة الغنية.",
+      "السر الرابع هو المكونات: استخدم زبدة ودقيق عالي الجودة، لأن جودة المكونات بتبان في الطعم النهائي مهما كانت الوصفة بسيطة.",
+      "والسر الخامس: جرّب ودوّن ملاحظاتك في كل مرة، ومع الوقت هتعرف بالظبط اللي يناسب فرنك ومكوناتك.",
+    ],
+  },
+  {
+    title: "كيفية تزيين الكيك بشكل جميل",
+    date: "20 أكتوبر 2026",
+    image: "/images/blog-2.jpg",
+    excerpt: "خطوات بسيطة وأدوات قليلة تحوّل أي كيك عادي لتحفة تستاهل التصوير.",
+    body: [
+      "التزيين الحلو بيبدأ من كيكة باردة تماماً: لو الكيك لسه دافئ، الكريمة هتسيح ومش هتثبت. سيب الكيك يبرد ساعة على الأقل قبل ما تبدأ.",
+      "استخدم طبقة خفيفة من الكريمة أولاً وسيبها في التلاجة 20 دقيقة، وبعدها حط الطبقة النهائية — الطبقة الأولى بتحبس الفتات وبتخلي الشكل نضيف.",
+      "أدوات بسيطة تكفي: سكينة عريضة أو سباتولا، وكيس حلواني بفوهة نجمة. جرّب الورود والحدود المموجة على ورق زبدة قبل ما تزيّن الكيك نفسه.",
+      "الفواكه الطازجة وورق النعناع بتضيف لمسة فاخرة من غير مجهود — فراولة، توت، ونعناع كفاية يحوّلوا أي كيك لتحفة.",
+    ],
+  },
+  {
+    title: "وصفة كوكيز سهلة في المنزل",
+    date: "15 أكتوبر 2026",
+    image: "/images/blog-3.jpg",
+    excerpt: "كوكيز طري من جوه ومقرمش من بره في 30 دقيقة بس — بمكونات موجودة في كل بيت.",
+    body: [
+      "المكونات: كوب زبدة طرية، كوب سكر بني، نصف كوب سكر أبيض، بيضتان، ملعقة فانيليا، كوبان ونصف دقيق، ملعقة صغيرة بيكنج صودا، ورقائق شوكولاتة.",
+      "اخلط الزبدة مع السكر لحد ما يبقى القوام كريمي، ضيف البيض والفانيليا، وبعدها الدقيق والبيكنج صودا، وأخيراً رقائق الشوكولاتة.",
+      "شكّل كرات صغيرة وحطها على صينية مبطنة بورق زبدة مع مسافات بينها، واخبزها على 180 درجة من 10 إلى 12 دقيقة لحد ما الأطراف تتماسك والوسط يفضل طري.",
+      "سيب الكوكيز يبرد 5 دقائق على الصينية قبل ما تنقله — هيكمل تماسكه وهو بيبرد، وهيطلع طري من جوه ومقرمش من بره.",
+    ],
+  },
 ];
 
 /* ------------------------------ small pieces ----------------------------- */
@@ -195,6 +230,19 @@ export default function Home() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [email, setEmail] = useState("");
   const [toast, setToast] = useState<string | null>(null);
+  const [checkoutStep, setCheckoutStep] = useState(false);
+  const [custName, setCustName] = useState("");
+  const [custPhone, setCustPhone] = useState("");
+  const [custAddress, setCustAddress] = useState("");
+  const [custNotes, setCustNotes] = useState("");
+  const [formError, setFormError] = useState("");
+  const [placedOrder, setPlacedOrder] = useState<{ code: string; name: string; total: number } | null>(null);
+  const [lightbox, setLightbox] = useState<number | null>(null);
+  const [activePost, setActivePost] = useState<number | null>(null);
+  const [policy, setPolicy] = useState<"privacy" | "terms" | null>(null);
+  const [contactName, setContactName] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
+  const [contactMsg, setContactMsg] = useState("");
 
   useEffect(() => {
     if (!toast) return;
@@ -232,6 +280,53 @@ export default function Home() {
     setToast("تم الاشتراك بنجاح! أهلاً بك في عائلة بيسكويك");
   };
 
+  const submitOrder = () => {
+    if (custName.trim().length < 2) {
+      setFormError("من فضلك اكتب اسمك");
+      return;
+    }
+    const phone = custPhone.replace(/[\s-]/g, "");
+    if (!/^01[0-9]{9}$/.test(phone)) {
+      setFormError("من فضلك اكتب رقم موبايل مصري صحيح (11 رقم يبدأ بـ 01)");
+      return;
+    }
+    if (custAddress.trim().length < 5) {
+      setFormError("من فضلك اكتب عنوان التوصيل");
+      return;
+    }
+    setFormError("");
+    const code = "B-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+    setPlacedOrder({ code, name: custName.trim(), total: cartTotal });
+    setCart({});
+    setCheckoutStep(false);
+    setCustName("");
+    setCustPhone("");
+    setCustAddress("");
+    setCustNotes("");
+    setOrderPlaced(true);
+  };
+
+  const submitContact = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (contactName.trim().length < 2) {
+      setToast("من فضلك اكتب اسمك");
+      return;
+    }
+    const phone = contactPhone.replace(/[\s-]/g, "");
+    if (!/^01[0-9]{9}$/.test(phone)) {
+      setToast("من فضلك اكتب رقم موبايل مصري صحيح");
+      return;
+    }
+    if (contactMsg.trim().length < 5) {
+      setToast("من فضلك اكتب رسالتك");
+      return;
+    }
+    setContactName("");
+    setContactPhone("");
+    setContactMsg("");
+    setToast("تم استلام رسالتك بنجاح! هنرد عليك في أقرب وقت");
+  };
+
   return (
     <div className="min-h-screen bg-surface font-sans text-ink">
       {/* ============ SECTION 1: Top bar ============ */}
@@ -253,14 +348,15 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-1.5">
             {SOCIALS.map(({ label, Icon }) => (
-              <a
+              <button
                 key={label}
-                href="#home"
+                type="button"
                 aria-label={label}
+                onClick={() => setToast(`صفحة بيسكويك على ${label} قريباً — تابعنا هنا`)}
                 className="flex h-6 w-6 items-center justify-center rounded-full border border-white/25 text-white/90 transition hover:border-caramel hover:text-caramel"
               >
                 <Icon className="h-3 w-3" />
-              </a>
+              </button>
             ))}
           </div>
         </div>
@@ -309,6 +405,7 @@ export default function Home() {
               aria-label="سلة التسوق"
               onClick={() => {
                 setOrderPlaced(false);
+                setCheckoutStep(false);
                 setCartOpen(true);
               }}
               className="relative flex h-10 w-10 items-center justify-center rounded-full text-ink transition hover:bg-cream hover:text-caramel"
@@ -479,11 +576,11 @@ export default function Home() {
             </p>
           )}
 
-          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
             {visibleProducts.map((p) => (
               <article
                 key={p.id}
-                className="rounded-2xl border border-border-warm bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                className="rounded-2xl border border-border-warm bg-white p-2.5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg sm:p-4"
               >
                 <div className="aspect-square overflow-hidden rounded-xl">
                   <Image
@@ -494,15 +591,15 @@ export default function Home() {
                     className="h-full w-full object-cover transition duration-500 hover:scale-105"
                   />
                 </div>
-                <h3 className="mt-4 text-center text-lg font-bold">{p.name}</h3>
-                <p className="mt-1 text-center text-lg font-extrabold text-caramel">
+                <h3 className="mt-3 text-center text-sm font-bold sm:mt-4 sm:text-lg">{p.name}</h3>
+                <p className="mt-1 text-center text-base font-extrabold text-caramel sm:text-lg">
                   {formatEGP(p.price)}
                 </p>
                 <button
                   type="button"
                   onClick={() => addToCart(p.id)}
                   className={cx(
-                    "mt-3 flex w-full items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold text-white transition",
+                    "mt-3 flex w-full items-center justify-center gap-1.5 rounded-full px-2 py-2 text-xs font-bold text-white transition sm:gap-2 sm:px-4 sm:py-2.5 sm:text-sm",
                     addedId === p.id ? "bg-espresso" : "bg-caramel hover:bg-caramel-hover"
                   )}
                 >
@@ -655,7 +752,13 @@ export default function Home() {
 
           <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3">
             {GALLERY.map((src, i) => (
-              <div key={src} className="group aspect-[4/3] overflow-hidden rounded-2xl">
+              <button
+                key={src}
+                type="button"
+                aria-label={`تكبير صورة ${i + 1} من المعرض`}
+                onClick={() => setLightbox(i)}
+                className="group aspect-[4/3] overflow-hidden rounded-2xl"
+              >
                 <Image
                   src={src}
                   alt={`من معرض المخبز ${i + 1}`}
@@ -663,18 +766,19 @@ export default function Home() {
                   height={600}
                   className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                 />
-              </div>
+              </button>
             ))}
           </div>
 
           <div className="mt-8 text-center">
-            <a
-              href="#gallery"
+            <button
+              type="button"
+              onClick={() => setLightbox(0)}
               className="inline-flex items-center gap-2 rounded-full bg-cocoa px-7 py-3 font-bold text-white transition hover:bg-espresso"
             >
               عرض المعرض بالكامل
               <ArrowLeft className="h-5 w-5" />
-            </a>
+            </button>
           </div>
         </div>
       </section>
@@ -730,33 +834,42 @@ export default function Home() {
           </p>
 
           <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
-            {POSTS.map((post) => (
+            {POSTS.map((post, i) => (
               <article
                 key={post.title}
                 className="overflow-hidden rounded-2xl border border-border-warm bg-white transition hover:-translate-y-1 hover:shadow-lg"
               >
-                <div className="aspect-[16/10] overflow-hidden">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    width={800}
-                    height={500}
-                    className="h-full w-full object-cover transition duration-500 hover:scale-105"
-                  />
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setActivePost(i)}
+                  className="block w-full text-start"
+                  aria-label={`اقرأ: ${post.title}`}
+                >
+                  <div className="aspect-[16/10] overflow-hidden">
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      width={800}
+                      height={500}
+                      className="h-full w-full object-cover transition duration-500 hover:scale-105"
+                    />
+                  </div>
+                </button>
                 <div className="p-5">
                   <h3 className="text-lg font-extrabold leading-snug">{post.title}</h3>
+                  <p className="mt-2 leading-relaxed text-muted">{post.excerpt}</p>
                   <p className="mt-2 flex items-center gap-2 text-sm text-muted">
                     <CalendarDays className="h-4 w-4 text-caramel" />
                     {post.date}
                   </p>
-                  <a
-                    href="#blog"
+                  <button
+                    type="button"
+                    onClick={() => setActivePost(i)}
                     className="mt-4 inline-flex items-center gap-1.5 font-bold text-caramel transition hover:text-caramel-hover"
                   >
                     اقرأ المزيد
                     <ArrowLeft className="h-4 w-4" />
-                  </a>
+                  </button>
                 </div>
               </article>
             ))}
@@ -815,8 +928,106 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ SECTION 11: Footer ============ */}
-      <footer id="contact" className="scroll-mt-24 border-b-4 border-caramel bg-espresso pb-6 pt-14 text-white/80">
+      {/* ============ SECTION 11: Contact ============ */}
+      <section id="contact" className="scroll-mt-24 px-4 pb-16 sm:px-6 md:pb-20">
+        <div className="mx-auto max-w-7xl">
+          <Eyebrow>تواصل معنا</Eyebrow>
+          <h2 className="mt-3 text-center text-3xl font-extrabold leading-snug md:text-4xl">
+            إحنا في خدمتك <span className="text-caramel">دائماً</span>
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-center leading-relaxed text-muted">
+            عندك طلب خاص، اقتراح، أو سؤال؟ ابعتلنا رسالة وهنرد عليك في أقرب وقت.
+          </p>
+
+          <div className="mt-10 grid gap-6 lg:grid-cols-5">
+            <div className="flex flex-col gap-4 lg:col-span-2">
+              <a
+                href="tel:+201001234567"
+                className="flex items-center gap-4 rounded-2xl border border-border-warm bg-white p-5 transition hover:border-caramel hover:shadow-md"
+              >
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-caramel/10 text-caramel">
+                  <Phone className="h-6 w-6" />
+                </span>
+                <span>
+                  <span className="block text-sm font-bold text-muted">اتصل بنا</span>
+                  <span dir="ltr" className="block font-extrabold">+20 100 123 4567</span>
+                </span>
+              </a>
+              <a
+                href="mailto:hello@biscquick.com"
+                className="flex items-center gap-4 rounded-2xl border border-border-warm bg-white p-5 transition hover:border-caramel hover:shadow-md"
+              >
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-caramel/10 text-caramel">
+                  <Mail className="h-6 w-6" />
+                </span>
+                <span>
+                  <span className="block text-sm font-bold text-muted">البريد الإلكتروني</span>
+                  <span dir="ltr" className="block font-extrabold">hello@biscquick.com</span>
+                </span>
+              </a>
+              <div className="flex items-center gap-4 rounded-2xl border border-border-warm bg-white p-5">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-caramel/10 text-caramel">
+                  <MapPin className="h-6 w-6" />
+                </span>
+                <span>
+                  <span className="block text-sm font-bold text-muted">العنوان</span>
+                  <span className="block font-extrabold">المعادي، القاهرة، مصر</span>
+                </span>
+              </div>
+              <div className="flex items-center gap-4 rounded-2xl border border-border-warm bg-white p-5">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-caramel/10 text-caramel">
+                  <Clock className="h-6 w-6" />
+                </span>
+                <span>
+                  <span className="block text-sm font-bold text-muted">مواعيد العمل</span>
+                  <span className="block font-extrabold">يومياً من 9 صباحاً حتى 11 مساءً</span>
+                </span>
+              </div>
+            </div>
+
+            <form
+              onSubmit={submitContact}
+              className="rounded-2xl border border-border-warm bg-white p-6 shadow-sm lg:col-span-3"
+            >
+              <h3 className="text-xl font-extrabold">ابعت لنا رسالة</h3>
+              <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                <input
+                  type="text"
+                  value={contactName}
+                  onChange={(e) => setContactName(e.target.value)}
+                  placeholder="الاسم"
+                  className="rounded-full border border-border-warm bg-cream px-5 py-3 text-sm font-semibold outline-none placeholder:text-muted focus:border-caramel"
+                />
+                <input
+                  type="tel"
+                  value={contactPhone}
+                  onChange={(e) => setContactPhone(e.target.value)}
+                  placeholder="رقم الموبايل (01xxxxxxxxx)"
+                  dir="rtl"
+                  className="rounded-full border border-border-warm bg-cream px-5 py-3 text-sm font-semibold outline-none placeholder:text-muted focus:border-caramel"
+                />
+              </div>
+              <textarea
+                value={contactMsg}
+                onChange={(e) => setContactMsg(e.target.value)}
+                placeholder="اكتب رسالتك هنا..."
+                rows={4}
+                className="mt-4 w-full resize-none rounded-2xl border border-border-warm bg-cream px-5 py-3 text-sm font-semibold outline-none placeholder:text-muted focus:border-caramel"
+              />
+              <button
+                type="submit"
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-caramel px-6 py-3 font-bold text-white transition hover:bg-caramel-hover sm:w-auto"
+              >
+                إرسال الرسالة
+                <ArrowLeft className="h-4 w-4" />
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ SECTION 12: Footer ============ */}
+      <footer className="scroll-mt-24 border-b-4 border-caramel bg-espresso pb-6 pt-14 text-white/80">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
             <div>
@@ -831,14 +1042,15 @@ export default function Home() {
               <p className="mt-4 leading-relaxed">حلاوة في كل لقمة، وسعادة في كل لحظة.</p>
               <div className="mt-5 flex items-center gap-2">
                 {SOCIALS.map(({ label, Icon }) => (
-                  <a
+                  <button
                     key={label}
-                    href="#home"
+                    type="button"
                     aria-label={label}
+                    onClick={() => setToast(`صفحة بيسكويك على ${label} قريباً — تابعنا هنا`)}
                     className="flex h-9 w-9 items-center justify-center rounded-full border border-white/25 text-white/90 transition hover:border-caramel hover:text-caramel"
                   >
                     <Icon className="h-4 w-4" />
-                  </a>
+                  </button>
                 ))}
               </div>
             </div>
@@ -866,7 +1078,11 @@ export default function Home() {
               <h3 className="font-extrabold text-white">خدماتنا</h3>
               <ul className="mt-4 space-y-2.5">
                 {["كيك حسب الطلب", "ضيافة حفلات", "حلويات فاخرة", "علب هدايا", "توصيل سريع"].map((s) => (
-                  <li key={s}>{s}</li>
+                  <li key={s}>
+                    <a href="#contact" className="transition hover:text-caramel">
+                      {s}
+                    </a>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -893,13 +1109,13 @@ export default function Home() {
           <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-sm sm:flex-row">
             <p>© 2026 بيسكويك. جميع الحقوق محفوظة.</p>
             <p>
-              <a href="#home" className="transition hover:text-caramel">
+              <button type="button" onClick={() => setPolicy("privacy")} className="transition hover:text-caramel">
                 سياسة الخصوصية
-              </a>
+              </button>
               <span className="mx-2 text-white/30">|</span>
-              <a href="#home" className="transition hover:text-caramel">
+              <button type="button" onClick={() => setPolicy("terms")} className="transition hover:text-caramel">
                 شروط الخدمة
-              </a>
+              </button>
             </p>
           </div>
         </div>
@@ -977,9 +1193,17 @@ export default function Home() {
                   <Check className="h-8 w-8" strokeWidth={3} />
                 </span>
                 <p className="text-xl font-extrabold">تم استلام طلبك بنجاح!</p>
-                <p className="leading-relaxed text-muted">
-                  شكراً لثقتك في بيسكويك. سنتواصل معك قريباً لتأكيد الطلب والتوصيل.
-                </p>
+                {placedOrder && (
+                  <>
+                    <p className="rounded-full bg-cream px-4 py-2 font-extrabold text-caramel" dir="ltr">
+                      {placedOrder.code}
+                    </p>
+                    <p className="leading-relaxed text-muted">
+                      شكراً يا {placedOrder.name}! طلبك بقيمة {formatEGP(placedOrder.total)} تم
+                      تسجيله، والدفع عند الاستلام. سنتواصل معك قريباً لتأكيد الطلب والتوصيل.
+                    </p>
+                  </>
+                )}
                 <button
                   type="button"
                   onClick={() => {
@@ -1007,6 +1231,45 @@ export default function Home() {
             ) : (
               <>
                 <div className="flex-1 overflow-y-auto px-5 py-4">
+                  {checkoutStep ? (
+                    <div className="flex flex-col gap-3">
+                      <h3 className="text-lg font-extrabold">بيانات التوصيل</h3>
+                      <input
+                        type="text"
+                        value={custName}
+                        onChange={(e) => setCustName(e.target.value)}
+                        placeholder="الاسم بالكامل"
+                        className="rounded-full border border-border-warm bg-cream px-5 py-3 text-sm font-semibold outline-none placeholder:text-muted focus:border-caramel"
+                      />
+                      <input
+                        type="tel"
+                        value={custPhone}
+                        onChange={(e) => setCustPhone(e.target.value)}
+                        placeholder="رقم الموبايل (01xxxxxxxxx)"
+                        className="rounded-full border border-border-warm bg-cream px-5 py-3 text-sm font-semibold outline-none placeholder:text-muted focus:border-caramel"
+                      />
+                      <input
+                        type="text"
+                        value={custAddress}
+                        onChange={(e) => setCustAddress(e.target.value)}
+                        placeholder="عنوان التوصيل (الشارع، العمارة، الشقة)"
+                        className="rounded-full border border-border-warm bg-cream px-5 py-3 text-sm font-semibold outline-none placeholder:text-muted focus:border-caramel"
+                      />
+                      <textarea
+                        value={custNotes}
+                        onChange={(e) => setCustNotes(e.target.value)}
+                        placeholder="ملاحظات (اختياري)"
+                        rows={2}
+                        className="w-full resize-none rounded-2xl border border-border-warm bg-cream px-5 py-3 text-sm font-semibold outline-none placeholder:text-muted focus:border-caramel"
+                      />
+                      {formError && (
+                        <p className="text-sm font-bold text-red-600">{formError}</p>
+                      )}
+                      <p className="text-xs text-muted">
+                        الدفع عند الاستلام — التوصيل مجاني للطلبات فوق 300 ج.م.
+                      </p>
+                    </div>
+                  ) : (
                   <ul className="flex flex-col gap-4">
                     {cartItems.map((p) => (
                       <li key={p.id} className="flex gap-3 rounded-2xl border border-border-warm p-3">
@@ -1056,24 +1319,43 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
+                  )}
                 </div>
                 <div className="border-t border-border-warm px-5 py-4">
                   <div className="flex items-center justify-between font-extrabold">
                     <span>المجموع</span>
                     <span>{formatEGP(cartTotal)}</span>
                   </div>
-                  <p className="mt-1 text-xs text-muted">الدفع عند الاستلام — التوصيل مجاني للطلبات فوق 300 ج.م.</p>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setCart({});
-                      setOrderPlaced(true);
-                    }}
-                    className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-caramel px-6 py-3 font-bold text-white transition hover:bg-caramel-hover"
-                  >
-                    إتمام الطلب
-                    <ArrowLeft className="h-5 w-5" />
-                  </button>
+                  {!checkoutStep && (
+                    <p className="mt-1 text-xs text-muted">الدفع عند الاستلام — التوصيل مجاني للطلبات فوق 300 ج.م.</p>
+                  )}
+                  {checkoutStep ? (
+                    <div className="mt-4 flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setCheckoutStep(false)}
+                        className="rounded-full border border-border-warm px-5 py-3 font-bold transition hover:border-caramel hover:text-caramel"
+                      >
+                        رجوع
+                      </button>
+                      <button
+                        type="button"
+                        onClick={submitOrder}
+                        className="flex flex-1 items-center justify-center gap-2 rounded-full bg-caramel px-6 py-3 font-bold text-white transition hover:bg-caramel-hover"
+                      >
+                        تأكيد الطلب
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setCheckoutStep(true)}
+                      className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-caramel px-6 py-3 font-bold text-white transition hover:bg-caramel-hover"
+                    >
+                      إتمام الطلب
+                      <ArrowLeft className="h-5 w-5" />
+                    </button>
+                  )}
                 </div>
               </>
             )}
@@ -1124,6 +1406,149 @@ export default function Home() {
               <p className="font-bold">جولة سريعة داخل مخبزنا — كيك الشوكولاتة بالغاناش</p>
               <p className="shrink-0 text-xs text-white/50">الفيديو: Pexels</p>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============ Gallery lightbox ============ */}
+      {lightbox !== null && (
+        <div
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/85 p-4"
+          onClick={() => setLightbox(null)}
+        >
+          <button
+            type="button"
+            aria-label="إغلاق المعرض"
+            onClick={() => setLightbox(null)}
+            className="absolute left-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white transition hover:bg-black/80"
+          >
+            <X className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            aria-label="الصورة التالية"
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightbox((lightbox + 1) % GALLERY.length);
+            }}
+            className="absolute left-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-white transition hover:bg-black/80"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            aria-label="الصورة السابقة"
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightbox((lightbox + GALLERY.length - 1) % GALLERY.length);
+            }}
+            className="absolute right-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-white transition hover:bg-black/80"
+          >
+            <ArrowLeft className="h-5 w-5 rotate-180" />
+          </button>
+          <div className="max-h-[85vh] max-w-3xl" onClick={(e) => e.stopPropagation()}>
+            <Image
+              src={GALLERY[lightbox]}
+              alt={`من معرض المخبز ${lightbox + 1}`}
+              width={1200}
+              height={900}
+              className="max-h-[80vh] w-auto rounded-2xl object-contain"
+            />
+            <p className="mt-3 text-center font-bold text-white">
+              {lightbox + 1} / {GALLERY.length}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* ============ Article modal ============ */}
+      {activePost !== null && (
+        <div
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/60 p-4"
+          onClick={() => setActivePost(null)}
+        >
+          <div
+            className="relative max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-3xl bg-white shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              aria-label="إغلاق المقال"
+              onClick={() => setActivePost(null)}
+              className="absolute left-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white transition hover:bg-black/80"
+            >
+              <X className="h-5 w-5" />
+            </button>
+            <Image
+              src={POSTS[activePost].image}
+              alt={POSTS[activePost].title}
+              width={800}
+              height={500}
+              className="aspect-[16/9] w-full object-cover"
+            />
+            <div className="p-6 md:p-8">
+              <h3 className="text-2xl font-extrabold leading-snug">{POSTS[activePost].title}</h3>
+              <p className="mt-2 flex items-center gap-2 text-sm text-muted">
+                <CalendarDays className="h-4 w-4 text-caramel" />
+                {POSTS[activePost].date}
+              </p>
+              {POSTS[activePost].body.map((para, i) => (
+                <p key={i} className="mt-4 leading-loose text-muted">
+                  {para}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============ Policy modal ============ */}
+      {policy && (
+        <div
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/60 p-4"
+          onClick={() => setPolicy(null)}
+        >
+          <div
+            className="relative max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-3xl bg-white p-6 shadow-2xl md:p-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              aria-label="إغلاق"
+              onClick={() => setPolicy(null)}
+              className="absolute left-4 top-4 flex h-9 w-9 items-center justify-center rounded-full hover:bg-cream"
+            >
+              <X className="h-5 w-5" />
+            </button>
+            <h3 className="text-2xl font-extrabold">
+              {policy === "privacy" ? "سياسة الخصوصية" : "شروط الخدمة"}
+            </h3>
+            {policy === "privacy" ? (
+              <div className="mt-4 space-y-3 leading-loose text-muted">
+                <p>
+                  بياناتك (الاسم ورقم الموبايل والعنوان) تُستخدم فقط لتجهيز طلبك
+                  وتوصيله، ولا نشاركها مع أي طرف ثالث.
+                </p>
+                <p>
+                  لا نخزن أي بيانات دفع، لأن الدفع عند الاستلام نقداً.
+                </p>
+                <p>
+                  يمكنك طلب حذف بياناتك في أي وقت بالتواصل معنا على
+                  hello@biscquick.com.
+                </p>
+              </div>
+            ) : (
+              <div className="mt-4 space-y-3 leading-loose text-muted">
+                <p>الأسعار المعروضة بالجنيه المصري، والدفع عند الاستلام.</p>
+                <p>التوصيل مجاني للطلبات فوق 300 ج.م.</p>
+                <p>
+                  يمكنك إلغاء أو تعديل طلبك بالاتصال بنا قبل بدء التجهيز.
+                </p>
+                <p>
+                  الصور المعروضة للتوضيح وقد تختلف قليلاً عن المنتج النهائي.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       )}

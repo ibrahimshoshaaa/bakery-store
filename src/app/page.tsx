@@ -279,13 +279,13 @@ export default function Home() {
             </span>
           </a>
 
-          <nav className="hidden items-center gap-7 lg:flex">
+          <nav className="hidden items-center gap-3 text-sm md:flex lg:gap-7 lg:text-base">
             {NAV.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
                 className={cx(
-                  "pb-1 font-semibold transition hover:text-caramel",
+                  "whitespace-nowrap pb-1 font-semibold transition hover:text-caramel",
                   l.active ? "border-b-2 border-caramel font-bold text-caramel" : "text-ink/80"
                 )}
               >
@@ -321,7 +321,7 @@ export default function Home() {
             </button>
             <a
               href="#menu"
-              className="hidden items-center gap-2 rounded-full bg-caramel px-5 py-2.5 text-sm font-bold text-white transition hover:bg-caramel-hover sm:flex"
+              className="hidden items-center gap-2 whitespace-nowrap rounded-full bg-caramel px-4 py-2.5 text-sm font-bold text-white transition hover:bg-caramel-hover sm:flex lg:px-5"
             >
               اطلب الآن
               <ArrowLeft className="h-4 w-4" />
@@ -330,7 +330,7 @@ export default function Home() {
               type="button"
               aria-label="القائمة"
               onClick={() => setMenuOpen(true)}
-              className="flex h-10 w-10 items-center justify-center rounded-full text-ink transition hover:bg-cream lg:hidden"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-ink transition hover:bg-cream md:hidden"
             >
               <Menu className="h-5 w-5" />
             </button>
@@ -363,22 +363,22 @@ export default function Home() {
       </header>
 
       {/* ============ SECTION 2: Hero ============ */}
-      <section id="home" className="relative overflow-hidden bg-gradient-to-l from-[#361B0E] via-[#2C1409] to-[#1E0D05] text-white">
-        <div className="mx-auto grid max-w-7xl lg:grid-cols-12">
-          <div className="px-5 pb-28 pt-14 sm:px-8 lg:col-span-7 lg:pb-44 lg:pt-24 lg:ps-10">
-            <Eyebrow light className="lg:justify-start">خبز طازج، ولذيذ دائماً</Eyebrow>
-            <h1 className="mt-5 text-center text-4xl font-extrabold leading-[1.15] md:text-6xl lg:text-start">
+      <section id="home" className="relative overflow-hidden bg-gradient-to-l from-[#33170A] via-[#2B1409] to-[#1E0D05] text-white">
+        <div className="mx-auto grid max-w-7xl md:grid-cols-12">
+          <div className="px-5 pb-8 pt-10 sm:px-8 md:col-span-7 md:pb-36 md:pt-14 md:ps-10">
+            <Eyebrow light className="md:justify-start">خبز طازج، ولذيذ دائماً</Eyebrow>
+            <h1 className="mt-5 text-center text-4xl font-extrabold leading-[1.15] md:text-start md:text-6xl lg:text-[4.4rem]">
               لحظات حلوة
               <br />
               <span className="text-caramel">تبدأ من هنا</span>
             </h1>
-            <p className="mx-auto mt-5 max-w-xl text-center leading-relaxed text-white/75 md:text-lg lg:mx-0 lg:text-start">
+            <p className="mx-auto mt-5 max-w-xl text-center leading-relaxed text-white/75 md:mx-0 md:text-start md:text-lg">
               اكتشف المزيج المثالي من المذاق والطزاجة مع مخبوزاتنا المحضرة يدوياً يومياً.
             </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:justify-start">
               <a
                 href="#menu"
-                className="flex items-center gap-2 rounded-full bg-caramel px-7 py-3 font-bold text-white shadow-lg shadow-caramel/30 transition hover:bg-caramel-hover"
+                className="flex items-center gap-2 rounded-full bg-caramel px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-caramel/30 transition hover:bg-caramel-hover sm:px-7 sm:py-3 sm:text-base"
               >
                 اطلب الآن
                 <ArrowLeft className="h-5 w-5" />
@@ -386,9 +386,9 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => setVideoOpen(true)}
-                className="flex items-center gap-3 rounded-full border border-white/40 px-6 py-3 font-bold text-white transition hover:border-white hover:bg-white/10"
+                className="flex items-center gap-2.5 rounded-full border border-white/40 px-4 py-2.5 text-sm font-bold text-white transition hover:border-white hover:bg-white/10 sm:gap-3 sm:px-6 sm:py-3 sm:text-base"
               >
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-cocoa">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-cocoa sm:h-7 sm:w-7">
                   <Play className="h-3.5 w-3.5 fill-current" />
                 </span>
                 شاهد الفيديو
@@ -396,15 +396,29 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="relative min-h-[380px] lg:col-span-5 lg:min-h-[560px] lg:ml-[calc((80rem-100vw)/2)]">
-            <Image
-              src="/images/hero-cake.jpg"
-              alt="كيكة شوكولاتة بالغاناش مع الفراولة والتوت"
-              fill
-              priority
-              className="hero-img-mask object-cover object-center"
-              sizes="(max-width: 1024px) 100vw, 42vw"
-            />
+          <div className="relative min-h-[340px] md:col-span-5 md:min-h-[540px] xl:ml-[calc((80rem-100vw)/2)]">
+            <div className="absolute inset-x-0 bottom-16 top-0 md:bottom-14">
+              <Image
+                src="/images/hero-cake.jpg"
+                alt="كيكة شوكولاتة بالغاناش مع الفراولة والتوت"
+                fill
+                priority
+                className="object-cover object-center"
+                sizes="(max-width: 767px) 100vw, 42vw"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-[linear-gradient(to_left,#2B1409_0%,rgb(43_20_9/0.55)_22%,transparent_55%)]"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#2B1409] to-transparent"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#2B1409] to-transparent md:hidden"
+              />
+            </div>
           </div>
         </div>
 
@@ -416,11 +430,11 @@ export default function Home() {
           aria-hidden="true"
         >
           <path
-            d="M0,64 C240,112 480,18 720,52 C960,86 1200,28 1440,72 L1440,120 L0,120 Z"
-            fill="#FDF8F2"
+            d="M0,40 C300,40 480,108 720,104 C960,100 1200,52 1440,44 L1440,120 L0,120 Z"
+            fill="#FFFFFF"
           />
           <path
-            d="M0,64 C240,112 480,18 720,52 C960,86 1200,28 1440,72"
+            d="M0,40 C300,40 480,108 720,104 C960,100 1200,52 1440,44"
             fill="none"
             stroke="#E57A1F"
             strokeWidth="5"
@@ -429,17 +443,21 @@ export default function Home() {
       </section>
 
       {/* ============ SECTION 3: Trust strip ============ */}
-      <section className="border-b border-border-warm bg-cream py-7">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 sm:px-6 md:grid-cols-4 md:divide-x md:divide-x-reverse md:divide-border-warm md:gap-0">
-          {TRUST.map(({ icon: Icon, title, sub }) => (
-            <div key={title} className="flex flex-col items-center gap-1.5 px-2 text-center">
-              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-caramel text-white shadow-md shadow-caramel/30">
-                <Icon className="h-6 w-6" />
-              </span>
-              <span className="font-extrabold">{title}</span>
-              <span className="text-sm text-muted">{sub}</span>
+      <section className="bg-surface">
+        <div className="mx-auto max-w-5xl px-4">
+          <div className="mt-6 rounded-2xl bg-[#FDF5EC] px-4 py-6 shadow-[0_8px_30px_rgb(0_0_0/0.06)]">
+            <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-0 md:divide-x md:divide-x-reverse md:divide-[#E8D8C8]">
+              {TRUST.map(({ icon: Icon, title, sub }) => (
+                <div key={title} className="flex flex-col items-center gap-1.5 px-2 text-center">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-caramel text-white shadow-md shadow-caramel/30">
+                    <Icon className="h-6 w-6" />
+                  </span>
+                  <span className="font-extrabold">{title}</span>
+                  <span className="text-sm text-muted">{sub}</span>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </section>
 
@@ -891,7 +909,7 @@ export default function Home() {
 
       {/* ============ Mobile menu drawer ============ */}
       {menuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
+        <div className="fixed inset-0 z-50 md:hidden">
           <div className="absolute inset-0 bg-black/50" onClick={() => setMenuOpen(false)} />
           <div className="absolute inset-y-0 right-0 w-72 max-w-[85vw] bg-white p-6 shadow-2xl">
             <div className="flex items-center justify-between">

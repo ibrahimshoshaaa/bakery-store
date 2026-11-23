@@ -40,11 +40,13 @@ const NAV = [
 ];
 
 const PRODUCTS = [
-  { id: "croissant", name: "كرواسون بالزبدة", price: 4.99, image: "/images/prod-croissant.jpg" },
-  { id: "cupcake", name: "كب كيك الشوكولاتة", price: 3.99, image: "/images/prod-cupcake.jpg" },
-  { id: "tart", name: "تارت الفواكه", price: 5.99, image: "/images/prod-tart.jpg" },
-  { id: "redvelvet", name: "كيكة الريد فيلفيت", price: 5.99, image: "/images/prod-redvelvet.jpg" },
+  { id: "croissant", name: "كرواسون بالزبدة", price: 45, image: "/images/prod-croissant.jpg" },
+  { id: "cupcake", name: "كب كيك الشوكولاتة", price: 40, image: "/images/prod-cupcake.jpg" },
+  { id: "tart", name: "تارت الفواكه", price: 65, image: "/images/prod-tart.jpg" },
+  { id: "redvelvet", name: "كيكة الريد فيلفيت", price: 75, image: "/images/prod-redvelvet.jpg" },
 ];
+
+const formatEGP = (n: number) => `${n} ج.م`;
 
 const TRUST = [
   { icon: Leaf, title: "مكونات طازجة", sub: "100% طبيعية" },
@@ -227,37 +229,37 @@ export default function Home() {
       return;
     }
     setEmail("");
-    setToast("تم الاشتراك بنجاح! أهلاً بك في عائلة بكري");
+    setToast("تم الاشتراك بنجاح! أهلاً بك في عائلة بيسكويك");
   };
 
   return (
     <div className="min-h-screen bg-surface font-sans text-ink">
       {/* ============ SECTION 1: Top bar ============ */}
-      <div className="bg-espresso py-2 text-xs text-white/90">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-4 sm:px-6">
-          <div className="flex flex-wrap items-center gap-4">
+      <div className="bg-espresso py-1.5 text-[11px] text-white/90">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6">
+          <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5">
               <Phone className="h-3.5 w-3.5 text-caramel" />
-              <span dir="ltr">+1 (555) 123-4567</span>
+              <span dir="ltr">+20 100 123 4567</span>
             </span>
-            <span className="flex items-center gap-1.5">
+            <span className="hidden items-center gap-1.5 md:flex">
               <Mail className="h-3.5 w-3.5 text-caramel" />
-              <span dir="ltr">hello@bakery.com</span>
+              <span dir="ltr">hello@biscquick.com</span>
             </span>
-            <span className="hidden items-center gap-1.5 sm:flex">
+            <span className="hidden items-center gap-1.5 md:flex">
               <MapPin className="h-3.5 w-3.5 text-caramel" />
-              123 شارع سويت، نيويورك
+              المعادي، القاهرة، مصر
             </span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             {SOCIALS.map(({ label, Icon }) => (
               <a
                 key={label}
                 href="#home"
                 aria-label={label}
-                className="flex h-7 w-7 items-center justify-center rounded-full border border-white/25 text-white/90 transition hover:border-caramel hover:text-caramel"
+                className="flex h-6 w-6 items-center justify-center rounded-full border border-white/25 text-white/90 transition hover:border-caramel hover:text-caramel"
               >
-                <Icon className="h-3.5 w-3.5" />
+                <Icon className="h-3 w-3" />
               </a>
             ))}
           </div>
@@ -266,15 +268,15 @@ export default function Home() {
 
       {/* ============ SECTION 1: Sticky navbar ============ */}
       <header className="sticky top-0 z-40 border-b border-border-warm bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2.5 sm:px-6 md:py-4">
           <a href="#home" className="flex items-center gap-2.5">
             <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-caramel/10 text-caramel">
               <CupcakeIcon className="h-7 w-7" />
             </span>
             <span className="leading-none">
-              <span className="block text-2xl font-black">بكري</span>
+              <span className="block text-2xl font-black">بيسكويك</span>
               <span className="mt-0.5 block text-xs font-bold text-muted" dir="ltr">
-                Bakery.com
+                Biscquick
               </span>
             </span>
           </a>
@@ -416,7 +418,7 @@ export default function Home() {
               />
               <div
                 aria-hidden="true"
-                className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#2B1409] to-transparent md:hidden"
+                className="bg-gradient-to-b from-[#2B1409] via-[#2B1409]/50 to-transparent h-24 absolute top-0 inset-x-0 pointer-events-none md:hidden"
               />
             </div>
           </div>
@@ -494,8 +496,8 @@ export default function Home() {
                   />
                 </div>
                 <h3 className="mt-4 text-center text-lg font-bold">{p.name}</h3>
-                <p className="mt-1 text-center text-lg font-extrabold text-caramel" dir="ltr">
-                  ${p.price.toFixed(2)}
+                <p className="mt-1 text-center text-lg font-extrabold text-caramel">
+                  {formatEGP(p.price)}
                 </p>
                 <button
                   type="button"
@@ -530,7 +532,7 @@ export default function Home() {
             <div className="grid items-center gap-10 lg:grid-cols-2">
               <div>
                 <p className="text-sm font-extrabold text-caramel">
-                  عن مخبزنا <span dir="ltr">Bakery.com</span>
+                  عن بيسكويك
                 </p>
                 <h2 className="relative mt-3 text-3xl font-extrabold leading-snug md:text-4xl">
                   <svg
@@ -549,7 +551,7 @@ export default function Home() {
                   مقدم بعناية
                 </h2>
                 <p className="mt-4 leading-loose text-muted">
-                  في <span dir="ltr">Bakery.com</span>، نؤمن بأن كل لقمة يجب أن تجلب
+                  في بيسكويك، نؤمن بأن كل لقمة يجب أن تجلب
                   السعادة. يختار خبازونا أجود المكونات الطبيعية لإعداد أشهى المخبوزات
                   والحلويات لمناسباتكم الخاصة.
                 </p>
@@ -685,7 +687,7 @@ export default function Home() {
             <div className="grid items-center gap-10 lg:grid-cols-12">
               <div className="lg:col-span-5">
                 <h2 className="text-3xl font-extrabold leading-snug md:text-4xl">
-                  لماذا تختار <span dir="ltr">Bakery.com</span>؟
+                  لماذا تختار بيسكويك؟
                 </h2>
                 <p className="mt-4 leading-relaxed text-white/70">
                   نقدم لك المزيج المثالي من الجودة والمذاق الأصيل والسعادة في كل طلب.
@@ -824,9 +826,9 @@ export default function Home() {
                   <CupcakeIcon className="h-7 w-7" />
                 </span>
                 <span className="leading-none">
-                  <span className="block text-2xl font-black text-white">بكري</span>
+                  <span className="block text-2xl font-black text-white">بيسكويك</span>
                   <span className="mt-0.5 block text-xs font-bold text-white/60" dir="ltr">
-                    Bakery.com
+                    Biscquick
                   </span>
                 </span>
               </a>
@@ -878,22 +880,22 @@ export default function Home() {
               <ul className="mt-4 space-y-3">
                 <li className="flex items-center gap-2.5">
                   <Phone className="h-4 w-4 shrink-0 text-caramel" />
-                  <span dir="ltr">+1 (555) 123-4567</span>
+                  <span dir="ltr">+20 100 123 4567</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <Mail className="h-4 w-4 shrink-0 text-caramel" />
-                  <span dir="ltr">hello@bakery.com</span>
+                  <span dir="ltr">hello@biscquick.com</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <MapPin className="h-4 w-4 shrink-0 text-caramel" />
-                  123 شارع سويت، نيويورك
+                  المعادي، القاهرة، مصر
                 </li>
               </ul>
             </div>
           </div>
 
           <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-sm sm:flex-row">
-            <p>© 2026 Bakery.com. جميع الحقوق محفوظة.</p>
+            <p>© 2026 بيسكويك. جميع الحقوق محفوظة.</p>
             <p>
               <a href="#home" className="transition hover:text-caramel">
                 سياسة الخصوصية
@@ -917,7 +919,7 @@ export default function Home() {
                 <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-caramel/10 text-caramel">
                   <CupcakeIcon className="h-6 w-6" />
                 </span>
-                <span className="text-xl font-black">بكري</span>
+                <span className="text-xl font-black">بيسكويك</span>
               </span>
               <button
                 type="button"
@@ -980,7 +982,7 @@ export default function Home() {
                 </span>
                 <p className="text-xl font-extrabold">تم استلام طلبك بنجاح!</p>
                 <p className="leading-relaxed text-muted">
-                  شكراً لثقتك في بكري. سنتواصل معك قريباً لتأكيد الطلب والتوصيل.
+                  شكراً لثقتك في بيسكويك. سنتواصل معك قريباً لتأكيد الطلب والتوصيل.
                 </p>
                 <button
                   type="button"
@@ -1021,8 +1023,8 @@ export default function Home() {
                         />
                         <div className="min-w-0 flex-1">
                           <p className="truncate font-bold">{p.name}</p>
-                          <p className="mt-0.5 text-sm font-extrabold text-caramel" dir="ltr">
-                            ${p.price.toFixed(2)}
+                          <p className="mt-0.5 text-sm font-extrabold text-caramel">
+                            {formatEGP(p.price)}
                           </p>
                           <div className="mt-2 flex items-center gap-2">
                             <button
@@ -1042,8 +1044,8 @@ export default function Home() {
                             >
                               <Minus className="h-4 w-4" />
                             </button>
-                            <span className="ms-auto text-sm font-extrabold" dir="ltr">
-                              ${((cart[p.id] ?? 0) * p.price).toFixed(2)}
+                            <span className="ms-auto text-sm font-extrabold">
+                              {formatEGP((cart[p.id] ?? 0) * p.price)}
                             </span>
                             <button
                               type="button"
@@ -1062,9 +1064,9 @@ export default function Home() {
                 <div className="border-t border-border-warm px-5 py-4">
                   <div className="flex items-center justify-between font-extrabold">
                     <span>المجموع</span>
-                    <span dir="ltr">${cartTotal.toFixed(2)}</span>
+                    <span>{formatEGP(cartTotal)}</span>
                   </div>
-                  <p className="mt-1 text-xs text-muted">الدفع عند الاستلام — التوصيل مجاني للطلبات فوق $30.</p>
+                  <p className="mt-1 text-xs text-muted">الدفع عند الاستلام — التوصيل مجاني للطلبات فوق 300 ج.م.</p>
                   <button
                     type="button"
                     onClick={() => {

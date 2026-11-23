@@ -9,7 +9,7 @@ const cairo = Cairo({
 });
 
 export const metadata: Metadata = {
-  title: "بكري | Bakery.com — لحظات حلوة تبدأ من هنا",
+  title: "بيسكويك | Biscquick — لحظات حلوة تبدأ من هنا",
   description:
     "اكتشف المزيج المثالي من المذاق والطزاجة مع مخبوزاتنا المحضرة يدوياً يومياً — كيك، كرواسون، كب كيك، تارت والمزيد.",
 };

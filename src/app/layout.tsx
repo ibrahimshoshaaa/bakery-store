@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cairo } from "next/font/google";
+import { Cairo, El_Messiri } from "next/font/google";
 import "./globals.css";
 
 const cairo = Cairo({
@@ -8,8 +8,15 @@ const cairo = Cairo({
   display: "swap",
 });
 
+const elMessiri = El_Messiri({
+  subsets: ["arabic", "latin"],
+  weight: ["600", "700"],
+  display: "swap",
+  variable: "--font-logo-face",
+});
+
 export const metadata: Metadata = {
-  title: "بيسكويك | Biscquick — لحظات حلوة تبدأ من هنا",
+  title: "بيسكويك — لحظات حلوة تبدأ من هنا",
   description:
     "اكتشف المزيج المثالي من المذاق والطزاجة مع مخبوزاتنا المحضرة يدوياً يومياً — كيك، كرواسون، كب كيك، تارت والمزيد.",
 };
@@ -21,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl">
-      <body className={`${cairo.className} bg-surface text-ink antialiased`}>
+      <body className={`${cairo.className} ${elMessiri.variable} bg-surface text-ink antialiased`}>
         {children}
       </body>
     </html>

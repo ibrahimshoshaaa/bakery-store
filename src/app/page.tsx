@@ -274,10 +274,7 @@ export default function Home() {
               <CupcakeIcon className="h-7 w-7" />
             </span>
             <span className="leading-none">
-              <span className="block text-2xl font-black">بيسكويك</span>
-              <span className="mt-0.5 block text-xs font-bold text-muted" dir="ltr">
-                Biscquick
-              </span>
+              <span className="block font-logo text-[1.75rem] font-bold">بيسكويك</span>
             </span>
           </a>
 
@@ -826,10 +823,7 @@ export default function Home() {
                   <CupcakeIcon className="h-7 w-7" />
                 </span>
                 <span className="leading-none">
-                  <span className="block text-2xl font-black text-white">بيسكويك</span>
-                  <span className="mt-0.5 block text-xs font-bold text-white/60" dir="ltr">
-                    Biscquick
-                  </span>
+                  <span className="block font-logo text-[1.75rem] font-bold text-white">بيسكويك</span>
                 </span>
               </a>
               <p className="mt-4 leading-relaxed">حلاوة في كل لقمة، وسعادة في كل لحظة.</p>
@@ -919,7 +913,7 @@ export default function Home() {
                 <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-caramel/10 text-caramel">
                   <CupcakeIcon className="h-6 w-6" />
                 </span>
-                <span className="text-xl font-black">بيسكويك</span>
+                <span className="font-logo text-xl font-bold">بيسكويك</span>
               </span>
               <button
                 type="button"

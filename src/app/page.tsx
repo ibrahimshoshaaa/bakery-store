@@ -269,13 +269,15 @@ export default function Home() {
       {/* ============ SECTION 1: Sticky navbar ============ */}
       <header className="sticky top-0 z-40 border-b border-border-warm bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2.5 sm:px-6 md:py-4">
-          <a href="#home" className="flex items-center gap-2.5">
-            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-caramel/10 text-caramel">
-              <CupcakeIcon className="h-7 w-7" />
-            </span>
-            <span className="leading-none">
-              <span className="block font-logo text-[1.75rem] font-bold">بيسكويك</span>
-            </span>
+          <a href="#home" className="flex items-center">
+            <Image
+              src="/images/logo.png"
+              alt="بيسكويك"
+              width={1073}
+              height={382}
+              priority
+              className="h-10 w-auto md:h-11"
+            />
           </a>
 
           <nav className="hidden items-center gap-3 text-sm md:flex lg:gap-7 lg:text-base">
